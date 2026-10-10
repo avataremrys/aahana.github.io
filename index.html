@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="night">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,13 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* =========================================================
-   COLOUR SCHEMES
-   Edit any theme below, or add your own by copying a block
-   and giving it a new name. Then add a matching swatch
-   button in the nav (search for "theme-swatch").
-   ========================================================= */
-[data-theme="plum"] {
+/* ========== COLOURS (edit here) ========== */
+[data-theme="light"] {
   --bg: #FAF7FA;
   --surface: #FFFFFF;
   --text: #2A1F28;
@@ -24,7 +19,7 @@
   --line: #E8DDE5;
 }
 :root,
-[data-theme="night"] {
+[data-theme="dark"] {
   --bg: #13171E;
   --surface: #1B2029;
   --text: #E6EAF0;
@@ -88,14 +83,18 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.
 }
 .nav a:hover, .nav a.active { color: var(--text); border-left-color: var(--accent); }
 
-.themes p { font-size: .85rem; color: var(--muted); margin: 0 0 .5rem; }
-.theme-row { display: flex; gap: .5rem; }
-.theme-swatch {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 2px solid var(--line); cursor: pointer; padding: 0;
-  background: linear-gradient(135deg, var(--sw-bg) 50%, var(--sw-accent) 50%);
+/* ========== LIGHT / DARK TOGGLE ========== */
+.mode-toggle {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: .4rem .9rem; font: inherit; font-size: .85rem; cursor: pointer;
 }
-.theme-swatch[aria-pressed="true"] { border-color: var(--text); }
+.mode-toggle:hover { border-color: var(--accent); }
+.mode-toggle svg { width: 16px; height: 16px; }
+.icon-sun { display: none; }
+[data-theme="dark"] .icon-sun { display: block; }
+[data-theme="dark"] .icon-moon { display: none; }
 
 main { padding: 3.5rem 0 5rem; }
 section { padding: 1rem 0 4.5rem; scroll-margin-top: 2rem; }
@@ -151,7 +150,7 @@ footer { color: var(--muted); font-size: .85rem; padding-top: 2rem; }
   .nav { grid-auto-flow: column; gap: 1rem; }
   .nav a { border-left: 0; padding: 0; border-bottom: 2px solid transparent; }
   .nav a:hover, .nav a.active { border-bottom-color: var(--accent); }
-  .themes p { display: none; }
+  .mode-label { display: none; }
   main { padding-top: 2rem; }
   .about { grid-template-columns: 1fr; }
   .section-title { font-size: 2rem; }
@@ -163,8 +162,7 @@ footer { color: var(--muted); font-size: .85rem; padding-top: 2rem; }
 
   <aside class="sidebar">
     <div>
-      <a href="#about" class="site-name">Your Name</a>
-      <p class="site-tagline">Your role or a short line</p>
+      <a href="#about" class="site-name">Aahana Jain</a>
       <nav>
         <ul class="nav">
           <li><a href="#about">About me</a></li>
@@ -174,14 +172,11 @@ footer { color: var(--muted); font-size: .85rem; padding-top: 2rem; }
       </nav>
     </div>
 
-    <div class="themes">
-      <p>Colour scheme</p>
-      <div class="theme-row">
-        <!-- theme-swatch: set --sw-bg / --sw-accent to match the theme -->
-        <button class="theme-swatch" data-set-theme="plum"    aria-label="Plum theme"    style="--sw-bg:#FAF7FA;--sw-accent:#6B2D5C"></button>
-        <button class="theme-swatch" data-set-theme="night"   aria-label="Night theme"   style="--sw-bg:#13171E;--sw-accent:#8FB3FF"></button>
-      </div>
-    </div>
+    <button class="mode-toggle" id="mode-toggle" type="button" aria-label="Switch to light mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="mode-label">Light mode</span>
+    </button>
   </aside>
 
   <main>
@@ -192,16 +187,16 @@ footer { color: var(--muted); font-size: .85rem; padding-top: 2rem; }
       <div class="about">
         <div>
           <!-- Put your photo at images/profile.jpg (or change the path) -->
-          <img class = "photo" src="images/profile.jpg" alt="Photo of Your Name"
-               onerror = "this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class = "photo-fallback">Add your photo at<br>images/profile.jpg</div>
+          <img class="photo" src="images/profile.jpg" alt="Photo of Your Name"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="photo-fallback">Add your photo at<br>images/profile.jpg</div>
         </div>
-        <div class = "about-text">
-          <p> Hi! My name is Aahana, and I am currently a first year PhD student in mathematics at the University of Warwick. My supervisor is <a href = "https://sites.google.com/view/gareth-tracey/home>"Dr. Gareth Tracey</a>, and I am working on some bounds of the Chebotarev invariant of (finite) almost simple groups. I am generally interested in all things group related, but I tend to lean towards the finite side. </p>
+        <div class="about-text">
+          <p> Hi! My name is Aahana, and I am currently a first year PhD student in mathematics at the University of Warwick. My supervisor is <a href="https://sites.google.com/view/gareth-tracey/home">Dr. Gareth Tracey</a>, and I am working on some bounds of the Chebotarev invariant of (finite) almost simple groups. I am generally interested in all things group related, but I tend to lean towards the finite side. </p>
           <p> I did my bachelor's in maths from IISER Bhopal and my master's from Imperial College London.</p>
-          <ul class = "links">
-            <li><a href = "mailto:aahana.jain@warwick.ac.uk">Email</a></li>
-            <li><a href = "https://www.linkedin.com/in/aahana-jain-5187041b9/">LinkedIn</a></li>
+          <ul class="links">
+            <li><a href="mailto:aahana.jain@warwick.ac.uk">Email</a></li>
+            <li><a href="https://www.linkedin.com/in/aahana-jain-5187041b9/">LinkedIn</a></li>
           </ul>
         </div>
       </div>
@@ -230,6 +225,7 @@ footer { color: var(--muted); font-size: .85rem; padding-top: 2rem; }
           <h3>Music!</h3>
           <p>(To be updated).</p>
         </div>
+      </div>
       <footer>© <span id="year"></span> Aahana</footer>
     </section>
 
@@ -237,19 +233,23 @@ footer { color: var(--muted); font-size: .85rem; padding-top: 2rem; }
 </div>
 
 <script>
-  // Theme switching (remembers the visitor's choice)
+  // Light / dark toggle (default dark, remembers the visitor's choice)
   const root = document.documentElement;
-  const swatches = document.querySelectorAll('[data-set-theme]');
+  const toggle = document.getElementById('mode-toggle');
+  const label = toggle.querySelector('.mode-label');
   function setTheme(name) {
     root.setAttribute('data-theme', name);
-    swatches.forEach(b => b.setAttribute('aria-pressed', b.dataset.setTheme === name));
+    const next = name === 'dark' ? 'light' : 'dark';
+    label.textContent = next === 'light' ? 'Light mode' : 'Dark mode';
+    toggle.setAttribute('aria-label', 'Switch to ' + next + ' mode');
     try { localStorage.setItem('theme', name); } catch (e) {}
   }
   let saved = null;
   try { saved = localStorage.getItem('theme'); } catch (e) {}
-  const valid = [...swatches].map(b => b.dataset.setTheme);
-  setTheme(valid.includes(saved) ? saved : root.getAttribute('data-theme'));
-  swatches.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
+  setTheme(saved === 'light' ? 'light' : 'dark');
+  toggle.addEventListener('click', () => {
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
 
   // Highlight current section in nav
   const links = document.querySelectorAll('.nav a');
